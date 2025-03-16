@@ -14,7 +14,6 @@
                 method: 'POST',
                 headers: {
                     'Accept': 'application/vnd.github.everest-preview+json',
-                    'Authorization': 'Bearer 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',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -24,9 +23,9 @@
             });
 
             if (response.ok) {
-                alert(action + " action sent!");
+                alert(action + " action sent successfully!");
             } else {
-                alert("Failed to send action. Check token and repo settings.");
+                alert("Failed to send action. Check GitHub Actions settings.");
             }
         }
     </script>
