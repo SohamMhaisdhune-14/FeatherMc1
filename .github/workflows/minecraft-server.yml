@@ -16,6 +16,9 @@ jobs:
   manage-minecraft:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Install Dependencies
         run: |
           sudo apt update
@@ -25,14 +28,14 @@ jobs:
       - name: Download and Setup PolyMC
         if: ${{ github.event.inputs.action == 'start' }}
         run: |
-          mkdir minecraft-server && cd minecraft-server
+          mkdir -p minecraft-server && cd minecraft-server
           wget https://github.com/PolyMC/PolyMC/releases/latest/download/polymc-server.zip
           unzip polymc-server.zip
           chmod +x start.sh
           echo "eula=true" > eula.txt
           nohup ./start.sh &
           echo "Minecraft server started!"
-
+          
       - name: Stop Minecraft Server
         if: ${{ github.event.inputs.action == 'stop' }}
         run: |
