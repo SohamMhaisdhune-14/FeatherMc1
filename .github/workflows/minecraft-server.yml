@@ -19,6 +19,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up GitHub Authentication
+        run: echo "GITHUB_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+
       - name: Install Dependencies
         run: |
           sudo apt update
@@ -35,7 +38,7 @@ jobs:
           echo "eula=true" > eula.txt
           nohup ./start.sh &
           echo "Minecraft server started!"
-          
+
       - name: Stop Minecraft Server
         if: ${{ github.event.inputs.action == 'stop' }}
         run: |
