@@ -1,0 +1,40 @@
+name: Start/Stop PolyMC Minecraft Server
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Start or Stop the Minecraft Server'
+        required: true
+        default: 'start'
+        type: choice
+        options:
+          - start
+          - stop
+
+jobs:
+  manage-minecraft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install openjdk-17-jre-headless -y
+          sudo apt install unzip wget -y
+
+      - name: Download and Setup PolyMC
+        if: ${{ github.event.inputs.action == 'start' }}
+        run: |
+          mkdir minecraft-server && cd minecraft-server
+          wget https://github.com/PolyMC/PolyMC/releases/latest/download/polymc-server.zip
+          unzip polymc-server.zip
+          chmod +x start.sh
+          echo "eula=true" > eula.txt
+          nohup ./start.sh &
+          echo "Minecraft server started!"
+
+      - name: Stop Minecraft Server
+        if: ${{ github.event.inputs.action == 'stop' }}
+        run: |
+          pkill -f "java"
+          echo "Minecraft server stopped."
