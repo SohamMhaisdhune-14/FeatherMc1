@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minecraft Server Control</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        button { font-size: 18px; padding: 10px 20px; margin: 10px; cursor: pointer; }
+    </style>
     <script>
         async function sendAction(action) {
             const response = await fetch('https://api.github.com/repos/SohamMhaisdhune-14/FeatherMc1/actions/workflows/minecraft-server.yml/dispatches', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/vnd.github.everest-preview+json',
-                    'Authorization': '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',
+                    'Authorization': 'Bearer YOUR_GITHUB_PERSONAL_ACCESS_TOKEN',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -20,7 +26,7 @@
             if (response.ok) {
                 alert(action + " action sent!");
             } else {
-                alert("Failed to send action.");
+                alert("Failed to send action. Check token and repo settings.");
             }
         }
     </script>
